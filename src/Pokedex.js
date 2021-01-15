@@ -13,8 +13,7 @@ class Pokedex extends React.Component {
             typesOfPokemons: [...new Set(pokemons.map(pokemon => pokemon.type))]
         }
         this.nextPokemon = this.nextPokemon.bind(this);
-        this.filterPokemonByType = this.filterPokemonByType.bind(this);
-        
+        this.filterPokemonByType = this.filterPokemonByType.bind(this);        
     }
 
     nextPokemon() {
@@ -23,9 +22,8 @@ class Pokedex extends React.Component {
         ))
     }
 
-    async filterPokemonByType(e) {
-      await this.setState({type: e.target.id})
-      await this.setState({pokemons: this.props.pokemons.filter(pokemon => pokemon.type === this.state.type)})
+    filterPokemonByType(e) {
+        this.setState({type: e.target.id},() => this.setState({pokemons: this.props.pokemons.filter(pokemon => pokemon.type === this.state.type)}) )
     }
 
     render() {
@@ -35,13 +33,18 @@ class Pokedex extends React.Component {
             <div className="pokedex">
                 {
                 this.state.pokemons.map(pokemon => <Pokemon key={pokemon.id} pokemon={pokemon} />)
-                    .filter((pokemon, index) => index === this.state.position )
+                    .filter((_pokemon, index) => index === this.state.position )
                 }                
             </div>
+
             <div className="btn-container">
-            {this.state.pokemons.length === 1 ? <Button classN="btn-disabled" id="next" action={this.nextPokemon} label="Próximo Pokemon"/> : 
+            {this.state.pokemons.length === 1 ? 
+            <Button classN="btn-disabled" id="next" action={this.nextPokemon} label="Próximo Pokemon"/> 
+            : 
             <Button classN="btn" id="next" action={this.nextPokemon} label="Próximo Pokemon"/>}
-            {this.state.typesOfPokemons.map(type => <Button classN="btn" id={type} action={this.filterPokemonByType} label={type}/>)}
+
+            {this.state.typesOfPokemons.map(type => <Button key={type} classN="btn" id={type} action={this.filterPokemonByType} label={type}/>)}
+
             <Button  classN="btn"id="All" action={() => this.setState({pokemons: this.props.pokemons})} label="All" />
             </div>
             </main>
