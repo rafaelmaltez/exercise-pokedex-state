@@ -2,9 +2,9 @@ import React from 'react';
 
 class Button extends React.Component {
     render() {
-        const { action, label } = this.props;
+        const { action, label, id } = this.props;
         return(
-            <button onClick={action}>
+            <button id={id} onClick={action}>
                 {label}
             </button>
         );
