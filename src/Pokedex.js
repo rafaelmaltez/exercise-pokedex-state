@@ -3,9 +3,10 @@ import Button from './Button';
 import Pokemon from './Pokemon';
 
 class Pokedex extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
+            pokemons: this.props.pokemons,
             position: 0,
         }
         this.nextPokemon = this.nextPokemon.bind(this);
@@ -13,7 +14,7 @@ class Pokedex extends React.Component {
 
     nextPokemon() {
         this.setState((anterior, _props) => (
-            this.state.position === this.props.pokemons.length - 1 ? {position: 0} : {position: anterior.position + 1}
+            this.state.position === this.state.pokemons.length - 1 ? {position: 0} : {position: anterior.position + 1}
         ))
     }
 
@@ -23,7 +24,7 @@ class Pokedex extends React.Component {
             <div className="pokedex">
 
                 {
-                this.props.pokemons.map(pokemon => <Pokemon key={pokemon.id} pokemon={pokemon} />)
+                this.state.pokemons.map(pokemon => <Pokemon key={pokemon.id} pokemon={pokemon} />)
                     .filter((pokemon, index) => index === this.state.position )
                 }                
             </div>
