@@ -33,15 +33,15 @@ class Pokedex extends React.Component {
         return (
             <main>
             <div className="pokedex">
-
                 {
                 this.state.pokemons.map(pokemon => <Pokemon key={pokemon.id} pokemon={pokemon} />)
                     .filter((pokemon, index) => index === this.state.position )
                 }                
             </div>
-            <Button id="next" action={this.nextPokemon} label="Próximo Pokemon"/>
-            {this.state.typesOfPokemons.map(type => <Button id={type} action={this.filterPokemonByType} label={type}/>)}
-                       
+            {this.state.pokemons.length === 1 ? <Button classN="btn-disabled" id="next" action={this.nextPokemon} label="Próximo Pokemon"/> : 
+            <Button classN="btn" id="next" action={this.nextPokemon} label="Próximo Pokemon"/>}
+            {this.state.typesOfPokemons.map(type => <Button classN="btn" id={type} action={this.filterPokemonByType} label={type}/>)}
+            <Button  classN="btn"id="All" action={() => this.setState({pokemons: this.props.pokemons})} label="All" />
             </main>
         );
     }

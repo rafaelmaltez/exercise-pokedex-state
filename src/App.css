@@ -4,9 +4,9 @@
 }
 h1 {
   font-family: Pokemon;
-  font-size: 5em;
+  font-size: 7em;
   color: yellow;
-  text-shadow: 5px 0px #160079;
+  text-shadow: 0px 0px 25px #160079, 5px 5px 0px #160079 ;  
   letter-spacing: 5px;
 }
 .App {
