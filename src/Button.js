@@ -3,9 +3,9 @@ import './Button.css'
 
 class Button extends React.Component {
     render() {
-        const { action, label, id, status } = this.props;
+        const { action, label, id, status, classN } = this.props;
         return(
-            <button {...status} className="btn" id={id} onClick={action}>
+            <button className={classN} id={id} onClick={action}>
                 {label}
             </button>
         );
