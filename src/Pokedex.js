@@ -2,6 +2,7 @@ import React from 'react';
 import Button from './Button';
 import Pokemon from './Pokemon';
 import './Pokedex.css';
+import pokemons from './data'
 
 class Pokedex extends React.Component {
     constructor(props) {
@@ -9,27 +10,26 @@ class Pokedex extends React.Component {
         this.state = {
             pokemons: this.props.pokemons,
             position: 0,
+            typesOfPokemons: [...new Set(pokemons.map(pokemon => pokemon.type))]
         }
         this.nextPokemon = this.nextPokemon.bind(this);
         this.filterPokemonByType = this.filterPokemonByType.bind(this);
+        
     }
 
     nextPokemon() {
-        this.setState((anterior, _props) => (
-            this.state.position === this.state.pokemons.length - 1 ? {position: 0} : {position: anterior.position + 1}
+        this.setState((previousState, _props) => (
+            this.state.position === this.state.pokemons.length - 1 ? {position: 0} : {position: previousState.position + 1}
         ))
     }
 
-    filterPokemonByType(e) {
-        this.setState(
-            {type: e.target.id}
-        )
-        this.setState(
-            {pokemons: this.props.pokemons.filter(pokemon => pokemon.type === this.state.type)}
-        )
+    async filterPokemonByType(e) {
+      await this.setState({type: e.target.id})
+      await this.setState({pokemons: this.props.pokemons.filter(pokemon => pokemon.type === this.state.type)})
     }
 
-    render() {        
+    render() {
+      
         return (
             <main>
             <div className="pokedex">
@@ -40,8 +40,8 @@ class Pokedex extends React.Component {
                 }                
             </div>
             <Button id="next" action={this.nextPokemon} label="Próximo Pokemon"/>
-            <Button id="Fire" action={this.filterPokemonByType} label="Fire" />
-            <Button id="Psychic" action={this.filterPokemonByType} label="Psychic" />
+            {this.state.typesOfPokemons.map(type => <Button id={type} action={this.filterPokemonByType} label={type}/>)}
+                       
             </main>
         );
     }
